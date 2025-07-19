@@ -23,3 +23,7 @@ Move the base/base into root file and remove the first base folder
 # DATABASE_ROUTERS = ['db_router.Movieplanet']
 # python manage.py makemigrations movieplanet
 # python manage.py migrate --database=movieplanet 
+
+# python manage.py createsuperuser
+# Username: admin
+# Email address: admin@example.com

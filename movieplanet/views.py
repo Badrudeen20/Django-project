@@ -488,6 +488,7 @@ def customers(request,*args,**kwargs):
 
       if request.method == 'POST' and 'Edit' in kwargs.get('permission'):
             uids = checkRoles(kwargs.get('authId'),kwargs.get('roleIds'),[])
+            
             if userId not in uids and Roles.objects.using('movieplanet').filter(user_id=userId, role_id__in=kwargs.get('roleIds')).exclude(user_id=kwargs.get('authId')).exists(): 
                   post = request.POST
                   roles = Roles.objects.using('movieplanet').filter(user_id=kwargs.get('authId')).exclude(role__name='User').all()
@@ -556,11 +557,13 @@ def customers(request,*args,**kwargs):
       else:
             if userId and 'Edit' in kwargs.get('permission'):
                uids = checkRoles(kwargs.get('authId'),kwargs.get('roleIds'),[])
+              
+              
                if userId not in uids and Roles.objects.using('movieplanet').filter(user_id=userId, role_id__in=kwargs.get('roleIds')).exclude(user_id=kwargs.get('authId')).exists():
                   # uids.remove(kwargs.get('authId'))
                   # merged = list(dict.fromkeys(uroles + kwargs.get('roleIds')))
-
-                  roles = Roles.objects.using('movieplanet').filter(user_id=kwargs.get('authId')).exclude(role__name='User').all()
+                  
+                  roles = Roles.objects.using('movieplanet').filter(user_id=kwargs.get('authId')).exclude(role__name='User').all() 
                   allowRoles = []
                   for r in roles:                     
                       if Roles.objects.using('movieplanet').filter(user_id=userId, role_id = r.role_id).exists():
@@ -724,7 +727,6 @@ def modules(request,*args,**kwargs):
     else:
       return render(request,"movieplanet/404.html")   
 
-
 @xhr_request_only()
 def sidebarList(request,*args,**kwargs):
    modules = kwargs.get('module')
@@ -733,7 +735,6 @@ def sidebarList(request,*args,**kwargs):
       "success": True,
       "data":sidebarList
    }, status=200)   
-
 
 @permission_required('Profile')
 def profile(request,*args,**kwargs):
